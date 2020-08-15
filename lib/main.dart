@@ -1,3 +1,5 @@
+import 'package:duveln_flutter/card.dart';
+import 'package:duveln_flutter/card_widget.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(new MyApp());
@@ -44,6 +46,8 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  PlayCard _currentCard;
+  CardStack stack = CardStack();
 
   void _incrementCounter() {
     setState(() {
@@ -53,6 +57,12 @@ class _MyHomePageState extends State<MyHomePage> {
       // _counter without calling setState(), then the build method would not be
       // called again, and so nothing would appear to happen.
       _counter++;
+      // if (_currentCard == null) {
+      //   _currentCard = stack.pull;
+      // } else {
+      //   _currentCard = null;
+      // }
+      _currentCard = stack.pull;
     });
   }
 
@@ -88,13 +98,20 @@ class _MyHomePageState extends State<MyHomePage> {
           // axis because Columns are vertical (the cross axis would be
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
           children: <Widget>[
+            Expanded(
+              child: CardWidget(card: _currentCard),
+            ),
             new Text(
               'You have pushed the button this many times:',
             ),
             new Text(
               '$_counter',
-              style: Theme.of(context).textTheme.display1,
+              style: Theme.of(context).textTheme.headline4,
+            ),
+            Expanded(
+              child: CardWidget(),
             ),
           ],
         ),
